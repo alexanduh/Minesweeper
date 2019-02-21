@@ -5,7 +5,7 @@ private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons that are mined
 public final static int NUM_ROWS = 20;
 public final static int NUM_COLS = 20;
-public final static int NUM_BOMBS = 20;
+public final static int NUM_BOMBS = 50;
 void setup ()
 {
     size(400, 400);
@@ -84,7 +84,15 @@ public class MSButton
     public void mousePressed () 
     {
         clicked = true;
-        //your code here
+        if(mouseButton == RIGHT) {
+            marked = !marked;
+            if(marked == false)
+                clicked = false;
+        }
+        else if(bombs.contains(this))
+            displayLosingMessage();
+        else if(countBombs(r, c) > 0)
+            setLabel("" + countBombs(r, c));
     }
 
     public void draw () 
@@ -108,14 +116,23 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        //your code here
+      if(r > 4 || r < 0)
         return false;
+      else if(c > 4 || c < 0)
+        return false;
+      return true;
     }
     public int countBombs(int row, int col)
     {
-        int numBombs = 0;
-        //your code here
-        return numBombs;
+        int ct = 0;
+        for(int i = -1; i <= 1; i++)
+            for(int j = -1; j <= 1; j++)
+                if((i == 0 && j == 0) == false)
+                    if(isValid(row+i, col+j) && bombs.contains(buttons[row+i][col+j]))
+                        ct++;
+        System.out.println(ct);
+        return ct;
+
     }
 }
 
