@@ -44,7 +44,7 @@ public boolean isWon()
     for(MSButton bomb : bombs) {
         if(bomb.isMarked()) {
             ct++;
-            System.out.println(ct);
+            //System.out.println(ct);
         if(ct == NUM_BOMBS)
             return true;
         }
